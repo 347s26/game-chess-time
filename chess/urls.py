@@ -26,5 +26,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('chessapp/', include('chessapp.urls')),
     path('', RedirectView.as_view(url='chessapp/', permanent=True)),
-    static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
