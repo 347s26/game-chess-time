@@ -9,7 +9,7 @@ class Player(models.Model):
     email: models.EmailField = models.EmailField(unique=True)
     date_created: models.DateTimeField = models.DateTimeField()
     last_online: models.DateTimeField = models.DateTimeField()
-    elo: models.ForeignKey = models.ForeignKey('Elo', on_delete=models.CASCADE)
+    elo: models.ForeignKey = models.ForeignKey('Elo', on_delete=models.CASCADE, related_name="player_elo")
 
     # Check player stats via their username
     def get_absolute_url(self):
@@ -24,7 +24,7 @@ class Elo(models.Model):
     time_control_id: models.ForeignKey = models.ForeignKey(
         'TimeControl', on_delete=models.CASCADE)
     player_id: models.ForeignKey = models.ForeignKey(
-        'Player', on_delete=models.CASCADE)
+        'Player', on_delete=models.CASCADE, related_name="elo_player_id")
     rating: models.IntegerField = models.IntegerField(default=800)
 
     def __str__(self):
@@ -57,9 +57,9 @@ class GameInstance(models.Model):
     started: models.DateTimeField = models.DateTimeField()
     ended: models.DateTimeField = models.DateTimeField()
     black: models.ForeignKey = models.ForeignKey(
-        "Player", on_delete=models.CASCADE)
+        "Player", on_delete=models.CASCADE, related_name="gameinstance_player_black")
     white: models.ForeignKey = models.ForeignKey(
-        "Player", on_delete=models.CASCADE)
+        "Player", on_delete=models.CASCADE, related_name="gameinstance_player_white")
     result: models.ForeignKey = models.ForeignKey(
         "Result", on_delete=models.CASCADE)
 
