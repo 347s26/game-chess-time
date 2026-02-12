@@ -62,6 +62,7 @@ class GameInstance(models.Model):
         "Player", on_delete=models.CASCADE, related_name="gameinstance_player_white")
     result: models.ForeignKey = models.ForeignKey(
         "Result", on_delete=models.CASCADE)
+    
 
     # Sort by started date by default
     class Meta:
@@ -100,12 +101,12 @@ class Move(models.Model):
     timestamp: models.DateTimeField = models.DateTimeField()
     player_id: models.ForeignKey = models.ForeignKey(
         'Player', on_delete=models.CASCADE)
-    game_instance_id: models.ForeignKey = models.ForeignKey(
+    game_instance: models.ForeignKey = models.ForeignKey(
         'GameInstance', on_delete=models.CASCADE)
     piece_id: models.ForeignKey = models.ForeignKey(
         'Piece', on_delete=models.CASCADE)
     source_location: models.CharField = models.CharField(max_length=2)
-    destination_location: models.CharField = models.CharField(max_length=2)
+    destination_location: models.CharField = models.CharField(max_length=2, null=True, blank=True) # Allow null for initial piece positions
 
     def __str__(self):
         return f"Move(id={self.id}, player={self.player_id.username}, piece={self.piece_id.name}, from={self.source_location}, to={self.destination_location}, time={self.timestamp})"
