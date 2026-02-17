@@ -1,5 +1,6 @@
 from .models import Player, Ratings, GameInstance, Result, Move, Piece
 from django.shortcuts import render
+from django.views import generic
 
 # Create your views here.
 def index(request):
@@ -82,3 +83,10 @@ def index(request):
     }
     
     return render(request, 'index.html', context=context)
+
+class PlayerDetailView(generic.DetailView):
+    model = Player
+    slug_field = 'username'
+    slug_url_kwarg = 'username'
+    context_object_name = 'player'
+    template_name = 'chessapp/player_detail.html'

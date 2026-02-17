@@ -1,0 +1,73 @@
+{% extends "base_generic.html" %}
+
+{% block content %}<div class="container mt-5">
+  <!-- Player Header -->
+  <div class="row mb-4">
+    <div class="col-md-8">
+      <h1 class="display-4">{{ player.username }}</h1>
+      <p class="lead">Player Profile</p>
+    </div>
+  </div>
+
+  <!-- Player Info Cards -->
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Account Information</h5>
+          <p class="card-text">
+            <strong>Email:</strong> {{ player.email }}<br>
+            <strong>Member Since:</strong> {{ player.date_created|date:"M d, Y H:i" }}<br>
+            <strong>Last Online:</strong> {{ player.last_online|date:"M d, Y H:i" }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ratings Section -->
+  <h2 class="display-8 mb-3">Ratings by Time Control</h2>
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Blitz (5 min)</h5>
+          <p class="card-text">
+            <span class="badge bg-success" style="font-size: 1.5rem;">{{ player.ratings.rating_5_min }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Blitz (10 min)</h5>
+          <p class="card-text">
+            <span class="badge bg-success" style="font-size: 1.5rem;">{{ player.ratings.rating_10_min }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Rapid (15 min)</h5>
+          <p class="card-text">
+            <span class="badge bg-success" style="font-size: 1.5rem;">{{ player.ratings.rating_15_min }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Rapid (30 min)</h5>
+          <p class="card-text">
+            <span class="badge bg-success" style="font-size: 1.5rem;">{{ player.ratings.rating_30_min }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

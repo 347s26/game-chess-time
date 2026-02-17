@@ -29,7 +29,7 @@
           <td>
             <span class="badge bg-primary">{{ forloop.counter }}</span>
           </td>
-          <td>{{ item.player.username }}</td>
+          <td><a href="{{ item.player.get_absolute_url }}">{{ item.player.username }}</a></td>
           <td>
             <span class="badge bg-success fs-6">{{ item.elo}}</span>
           </td>
@@ -55,7 +55,7 @@
           <td>
             <span class="badge bg-primary">{{ forloop.counter }}</span>
           </td>
-          <td>{{ item.player.username }}</td>
+          <td><a href="{{ item.player.get_absolute_url }}">{{ item.player.username }}</a></td>
           <td>
             <span class="badge bg-success fs-6">{{ item.elo }}</span>
           </td>
@@ -81,7 +81,7 @@
           <td>
             <span class="badge bg-primary">{{ forloop.counter }}</span>
           </td>
-          <td>{{ item.player.username }}</td>
+          <td><a href="{{ item.player.get_absolute_url }}">{{ item.player.username }}</a></td>
           <td>
             <span class="badge bg-success fs-6">{{ item.elo }}</span>
           </td>
@@ -107,7 +107,7 @@
           <td>
             <span class="badge bg-primary">{{ forloop.counter }}</span>
           </td>
-          <td>{{ item.player.username }}</td>
+          <td><a href="{{ item.player.get_absolute_url }}">{{ item.player.username }}</a></td>
           <td>
             <span class="badge bg-success fs-6">{{ item.elo }}</span>
           </td>
