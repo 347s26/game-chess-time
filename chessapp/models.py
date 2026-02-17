@@ -1,5 +1,7 @@
 from django.db import models
 from django.urls import reverse
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -9,7 +11,6 @@ class Player(models.Model):
     email: models.EmailField = models.EmailField(unique=True)
     date_created: models.DateTimeField = models.DateTimeField()
     last_online: models.DateTimeField = models.DateTimeField()
-    elo: models.ForeignKey = models.ForeignKey('Elo', on_delete=models.CASCADE, related_name="player_elo")
 
     # Check player stats via their username
     def get_absolute_url(self):
@@ -19,41 +20,30 @@ class Player(models.Model):
         return f"{self.username}"
 
 
-class Elo(models.Model):
-    elo_id: models.AutoField = models.AutoField(primary_key=True)
-    time_control_id: models.ForeignKey = models.ForeignKey(
-        'TimeControl', on_delete=models.CASCADE)
-    player_id: models.ForeignKey = models.ForeignKey(
-        'Player', on_delete=models.CASCADE, related_name="elo_player_id")
-    rating: models.IntegerField = models.IntegerField(default=800)
+class Ratings(models.Model):
+    player: models.OneToOneField = models.OneToOneField(
+        'Player', on_delete=models.CASCADE, related_name="ratings")
+    rating_5_min: models.IntegerField = models.IntegerField(default=800)
+    rating_10_min: models.IntegerField = models.IntegerField(default=800)
+    rating_15_min: models.IntegerField = models.IntegerField(default=800)
+    rating_30_min: models.IntegerField = models.IntegerField(default=800)
 
     def __str__(self):
-        return f"{self.player_id.username} - {self.rating} ({self.time_control_id.time} + {self.time_control_id.increment})"
+        return f"{self.player.username} Ratings"
 
 
-class TimeControl(models.Model):
-    player_id: models.ForeignKey = models.ForeignKey(
-        'Player', on_delete=models.CASCADE)
-
-    TIME_CONTROL = (
+class GameInstance(models.Model):
+    TIME_CONTROL_CHOICES = (
         (5, '5 minutes'),
         (10, '10 minutes'),
         (15, '15 minutes'),
         (30, '30 minutes'),
     )
-    time: models.IntegerField = models.IntegerField(
-        choices=TIME_CONTROL, 
-        default=5, 
+    time_control: models.IntegerField = models.IntegerField(
+        choices=TIME_CONTROL_CHOICES,
+        default=5,
         help_text='Time Control in minutes'
     )
-
-    def __str__(self):
-        return f"{self.time}"
-
-
-class GameInstance(models.Model):
-    time_control: models.ForeignKey = models.ForeignKey(
-        "TimeControl", on_delete=models.CASCADE)
     started: models.DateTimeField = models.DateTimeField()
     ended: models.DateTimeField = models.DateTimeField()
     black: models.ForeignKey = models.ForeignKey(
@@ -118,3 +108,10 @@ class Piece(models.Model):
 
     def __str__(self):
         return f"{self.color} {self.name}"
+
+
+@receiver(post_save, sender=Player)
+def create_ratings(sender, instance, created, **kwargs):
+    """Automatically create a Ratings object when a Player is created"""
+    if created:
+        Ratings.objects.create(player=instance)
