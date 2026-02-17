@@ -9,26 +9,76 @@ def index(request):
     
     # Get all players with their highest elo rating
     players = Player.objects.all()
-    players_data = []
+    players_blitz_5_data = []
+    players_blitz_10_data = []
+    players_rapid_15_data = []
+    players_rapid_30_data = []
     
     for player in players:
+        # Build Blitz (5 minutes) list
         try:
             ratings = player.ratings
-            highest_elo = max(ratings.rating_5_min, ratings.rating_10_min, ratings.rating_15_min, ratings.rating_30_min)
+            players_blitz_5_data.append({
+                'player': player,
+                'elo': ratings.rating_5_min
+            })
         except Ratings.DoesNotExist:
-            highest_elo = 0
+            players_blitz_5_data.append({
+                'player': player,
+                'elo': 0
+            })
         
-        players_data.append({
-            'player': player,
-            'highest_elo': highest_elo
-        })
+        # Build Blitz (10 minutes) list
+        try:
+            ratings = player.ratings
+            players_blitz_10_data.append({
+                'player': player,
+                'elo': ratings.rating_10_min
+            })
+        except Ratings.DoesNotExist:
+            players_blitz_10_data.append({
+                'player': player,
+                'elo': 0
+            })
+        
+        # Build Rapid (15 minutes) list
+        try:
+            ratings = player.ratings
+            players_rapid_15_data.append({
+                'player': player,
+                'elo': ratings.rating_15_min
+            })
+        except Ratings.DoesNotExist:
+            players_rapid_15_data.append({
+                'player': player,
+                'elo': 0
+            })
+        
+        # Build Rapid (30 minutes) list
+        try:
+            ratings = player.ratings
+            players_rapid_30_data.append({
+                'player': player,
+                'elo': ratings.rating_30_min
+            })
+        except Ratings.DoesNotExist:
+            players_rapid_30_data.append({
+                'player': player,
+                'elo': 0
+            })
     
     # Sort by highest elo rating in descending order
-    players_data.sort(key=lambda x: x['highest_elo'], reverse=True)
+    players_blitz_5_data.sort(key=lambda x: x['elo'], reverse=True)
+    players_blitz_10_data.sort(key=lambda x: x['elo'], reverse=True)
+    players_rapid_15_data.sort(key=lambda x: x['elo'], reverse=True)
+    players_rapid_30_data.sort(key=lambda x: x['elo'], reverse=True)
   
     context = {
         'num_of_players': num_of_players,
-        'players': players_data,
+        'players_blitz_5': players_blitz_5_data,
+        'players_blitz_10': players_blitz_10_data,
+        'players_rapid_15': players_rapid_15_data,
+        'players_rapid_30': players_rapid_30_data,
     }
     
     return render(request, 'index.html', context=context)

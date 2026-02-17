@@ -13,25 +13,103 @@
       </div>
     </div>
   </div>
-
+  <h2 class="display-8">Blitz (5 minutes)</h2>
   <div class="table-responsive">
     <table class="table table-striped table-hover">
       <thead class="table-dark">
         <tr>
           <th scope="col">Rank</th>
           <th scope="col">Username</th>
-          <th scope="col">Highest Rating</th>
+          <th scope="col">Rating</th>
         </tr>
       </thead>
       <tbody>
-        {% for item in players %}
+        {% for item in players_blitz_5 %}
         <tr>
           <td>
             <span class="badge bg-primary">{{ forloop.counter }}</span>
           </td>
           <td>{{ item.player.username }}</td>
           <td>
-            <span class="badge bg-success fs-6">{{ item.highest_elo }}</span>
+            <span class="badge bg-success fs-6">{{ item.elo}}</span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="display-8">Blitz (10 minutes)</h2>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Rank</th>
+          <th scope="col">Username</th>
+          <th scope="col">Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in players_blitz_10 %}
+        <tr>
+          <td>
+            <span class="badge bg-primary">{{ forloop.counter }}</span>
+          </td>
+          <td>{{ item.player.username }}</td>
+          <td>
+            <span class="badge bg-success fs-6">{{ item.elo }}</span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="display-8">Rapid (15 minutes)</h2>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Rank</th>
+          <th scope="col">Username</th>
+          <th scope="col">Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in players_rapid_15 %}
+        <tr>
+          <td>
+            <span class="badge bg-primary">{{ forloop.counter }}</span>
+          </td>
+          <td>{{ item.player.username }}</td>
+          <td>
+            <span class="badge bg-success fs-6">{{ item.elo }}</span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="display-8">Rapid (30 minutes)</h2>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Rank</th>
+          <th scope="col">Username</th>
+          <th scope="col">Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in players_rapid_30 %}
+        <tr>
+          <td>
+            <span class="badge bg-primary">{{ forloop.counter }}</span>
+          </td>
+          <td>{{ item.player.username }}</td>
+          <td>
+            <span class="badge bg-success fs-6">{{ item.elo }}</span>
           </td>
         </tr>
         {% endfor %}
