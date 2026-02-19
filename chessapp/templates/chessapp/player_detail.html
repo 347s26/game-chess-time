@@ -5,7 +5,6 @@
   <div class="row mb-4">
     <div class="col-md-8">
       <h1 class="display-4">{{ player.username }}</h1>
-      <p class="lead">Player Profile</p>
     </div>
   </div>
 
@@ -17,8 +16,8 @@
           <h5 class="card-title">Account Information</h5>
           <p class="card-text">
             <strong>Email:</strong> {{ player.email }}<br>
-            <strong>Member Since:</strong> {{ player.date_created|date:"M d, Y H:i" }}<br>
-            <strong>Last Online:</strong> {{ player.last_online|date:"M d, Y H:i" }}
+            <strong>Member Since:</strong> {{ player.date_created|date:"M d, Y" }}<br>
+            <strong>Last Online:</strong> {{ player.last_online|date:"M d, Y" }}
           </p>
         </div>
       </div>
